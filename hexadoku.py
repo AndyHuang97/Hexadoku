@@ -1,10 +1,12 @@
 import hashlib
 def row(x, y, mat):
+    # returns the possible values of the row
     rowSet = list(set(baseSet).difference(mat[x]))
     # print(rowset)
     return rowSet
 
 def col(x, y, mat):
+    # returns the possible values of the column
     col = list()
     for i in range(16):
         col.append(mat[i][y])
@@ -13,6 +15,7 @@ def col(x, y, mat):
     return colSet
 
 def quad(x, y, mat):
+    # returns the possible values of the quadrant
     qrow = int(x/4)
     qcol = int(y/4)
     # print(qrow, qcol)
@@ -69,22 +72,26 @@ matrix = [['3', 'F', '_', '_', '_', '6', '8', '9', '5', '2', '4', '_', '_', '_',
           ['9', '_', '1', '2', '_', 'F', '_', '5', 'E', '_', 'C', '_', '3', 'A', '_', 'D'],
           ['D', 'A', '_', '_', '_', '3', '7', 'E', 'B', 'F', '2', '_', '_', '_', '5', '0']]
 
+# prints initial configuration
 for line in matrix:
     print(line)
 print('\n')
 
+# solving the hexadoku
 updates = list()
 updates = iteration(matrix)
 while updates != [] :
     updates = iteration(matrix)
 
+# prints the final string
 output = str()
 for line in matrix:
     print(line)
     output = output + ''.join(line)
-
 print('\n')
 print(output)
+
+# prints the SHA-256 of the final string
 # hashlib.sha256(byte string)
 h = hashlib.sha256(output.encode()).hexdigest()
 print('\nSHA-256:', h)
